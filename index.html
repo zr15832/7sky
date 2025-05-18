@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>V2RayNG Auto Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #download {
+      background-color: #00c6ff;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    #download:hover {
+      background-color: #0073aa;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Download Latest V2RayNG APK</h1>
+  <a id="download" href="#" download>Loading...</a>
+  <div class="status" id="status">Fetching latest release...</div>
+
+  <script>
+    fetch('https://api.github.com/repos/2dust/v2rayNG/releases/latest')
+      .then(response => response.json())
+      .then(data => {
+        const assets = data.assets;
+        const apk = assets.find(asset => asset.name.endsWith('.apk'));
+        if (apk) {
+          const link = document.getElementById('download');
+          link.href = apk.browser_download_url;
+          link.textContent = 'Download V2RayNG';
+          document.getElementById('status').textContent = `Latest version: ${data.tag_name}`;
+        } else {
+          document.getElementById('download').textContent = 'APK Not Found';
+          document.getElementById('status').textContent = 'No APK found in latest release.';
+        }
+      })
+      .catch(error => {
+        document.getElementById('download').textContent = 'Error';
+        document.getElementById('status').textContent = 'Failed to fetch release info.';
+      });
+  </script>
+</body>
+</html>
