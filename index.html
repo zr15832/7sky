@@ -31,7 +31,8 @@
       unicode-bidi: plaintext;
     }
 
-    .ltr {
+    .no-fa-digits {
+      font-family: monospace, 'Courier New', sans-serif;
       direction: ltr;
       unicode-bidi: embed;
     }
@@ -80,15 +81,20 @@
   </style>
 </head>
 <body>
-  <h1><span class="ltr">7sky VPN</span></h1>
+  <h1><span class="no-fa-digits">7sky VPN</span></h1>
   <a id="download" href="#" class="button" download>در حال بارگذاری...</a>
-  <div id="date"></div>
+  <div id="date">در حال دریافت تاریخ انتشار...</div>
   <a href="https://t.me/sevenskyvpn" class="button" target="_blank">کانال تلگرام</a>
-  <div id="status">در حال دریافت آخرین نسخه <span class="ltr">V2RayNG</span>...</div>
+  <div id="status">در حال دریافت آخرین نسخه <span class="no-fa-digits">V2RayNG</span>...</div>
 
-  <footer>ساخته شده توسط <span class="ltr"><strong>7SKY</strong></span></footer>
+  <footer>ساخته شده توسط <span class="no-fa-digits"><strong>7SKY</strong></span></footer>
 
   <script>
+    function toPersianDigits(str) {
+      const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+      return str.replace(/\d/g, x => persianDigits[x]);
+    }
+
     fetch('https://api.github.com/repos/2dust/v2rayNG/releases/latest')
       .then(response => response.json())
       .then(data => {
@@ -97,13 +103,14 @@
           const link = document.getElementById('download');
           link.href = apk.browser_download_url;
           link.textContent = 'دانلود V2RayNG';
-          document.getElementById('status').innerHTML = `نسخه: <span class="ltr">${data.tag_name}</span>`;
+          document.getElementById('status').innerHTML = `نسخه: <span class="no-fa-digits">${data.tag_name}</span>`;
 
           const publishedDate = new Date(data.published_at);
-          const formattedDate = publishedDate.toLocaleDateString('fa-IR', {
+          const formatter = new Intl.DateTimeFormat('fa-IR', {
             year: 'numeric', month: 'long', day: 'numeric'
           });
-          document.getElementById('date').textContent = `تاریخ انتشار: ${formattedDate}`;
+          const persianDate = formatter.format(publishedDate);
+          document.getElementById('date').textContent = 'تاریخ انتشار: ' + toPersianDigits(persianDate);
         } else {
           document.getElementById('download').textContent = 'فایل APK پیدا نشد';
         }
