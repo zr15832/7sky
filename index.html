@@ -14,7 +14,7 @@
       margin: 0;
       padding: 0;
       background-color: #000;
-      font-family: 'Yekan', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Yekan', sans-serif;
       color: #FFD700;
       background-image: url('logo_background.png');
       background-repeat: no-repeat;
@@ -27,6 +27,13 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
+      direction: rtl;
+      unicode-bidi: plaintext;
+    }
+
+    .ltr {
+      direction: ltr;
+      unicode-bidi: embed;
     }
 
     h1 {
@@ -73,13 +80,13 @@
   </style>
 </head>
 <body>
-  <h1>7sky VPN</h1>
+  <h1><span class="ltr">7sky VPN</span></h1>
   <a id="download" href="#" class="button" download>در حال بارگذاری...</a>
   <div id="date"></div>
   <a href="https://t.me/sevenskyvpn" class="button" target="_blank">کانال تلگرام</a>
-  <div id="status">در حال دریافت آخرین نسخه V2RayNG...</div>
+  <div id="status">در حال دریافت آخرین نسخه <span class="ltr">V2RayNG</span>...</div>
 
-  <footer>ساخته شده توسط <strong>7SKY</strong></footer>
+  <footer>ساخته شده توسط <span class="ltr"><strong>7SKY</strong></span></footer>
 
   <script>
     fetch('https://api.github.com/repos/2dust/v2rayNG/releases/latest')
@@ -90,9 +97,8 @@
           const link = document.getElementById('download');
           link.href = apk.browser_download_url;
           link.textContent = 'دانلود V2RayNG';
-          document.getElementById('status').textContent = `نسخه: ${data.tag_name}`;
+          document.getElementById('status').innerHTML = `نسخه: <span class="ltr">${data.tag_name}</span>`;
 
-          // نمایش تاریخ انتشار
           const publishedDate = new Date(data.published_at);
           const formattedDate = publishedDate.toLocaleDateString('fa-IR', {
             year: 'numeric', month: 'long', day: 'numeric'
