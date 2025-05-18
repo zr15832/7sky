@@ -56,7 +56,7 @@
 <body>
   <h1>7sky VPN</h1>
   <a id="download" href="#" class="button" download>در حال بارگذاری...</a>
-  <a href="https://t.me/sevenskyvpn" class="button" target="_blank">کانال تلگرام</a>
+  <a href="https://t.me/sevenskyvpn" class="button" target="_blank">کانال تلگرام ما</a>
   <div id="status">در حال دریافت آخرین نسخه V2RayNG...</div>
 
   <script>
@@ -67,7 +67,7 @@
         if (apk) {
           const link = document.getElementById('download');
           link.href = apk.browser_download_url;
-          link.textContent = 'دانلود V2RayNG';
+          link.textContent = 'دانلود آخرین نسخه V2RayNG';
           document.getElementById('status').textContent = `نسخه: ${data.tag_name}`;
         } else {
           document.getElementById('download').textContent = 'فایل APK پیدا نشد';
