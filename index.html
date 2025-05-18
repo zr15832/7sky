@@ -1,75 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>V2RayNG Auto Downloader</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>7sky VPN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #FFD700;
+      background-image: url('logo_background.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      background-attachment: fixed;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
       text-align: center;
     }
 
-    #download {
-      background-color: #00c6ff;
-      color: white;
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #FFD700;
+    }
+
+    a.button {
+      display: inline-block;
+      background: #FFD700;
+      color: #000;
       padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      cursor: pointer;
+      margin: 10px;
       text-decoration: none;
-      transition: background 0.3s ease;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
     }
 
-    #download:hover {
-      background-color: #0073aa;
+    a.button:hover {
+      background: #d4af37;
     }
 
-    .status {
-      margin-top: 20px;
+    #status {
+      margin-top: 15px;
       font-size: 1rem;
       opacity: 0.8;
     }
   </style>
 </head>
 <body>
-  <h1>Download Latest V2RayNG APK</h1>
-  <a id="download" href="#" download>Loading...</a>
-  <div class="status" id="status">Fetching latest release...</div>
+  <h1>7sky VPN</h1>
+  <a id="download" href="#" class="button" download>در حال بارگذاری...</a>
+  <a href="https://t.me/sevenskyvpn" class="button" target="_blank">کانال تلگرام</a>
+  <div id="status">در حال دریافت آخرین نسخه V2RayNG...</div>
 
   <script>
     fetch('https://api.github.com/repos/2dust/v2rayNG/releases/latest')
       .then(response => response.json())
       .then(data => {
-        const assets = data.assets;
-        const apk = assets.find(asset => asset.name.endsWith('.apk'));
+        const apk = data.assets.find(asset => asset.name.endsWith('.apk'));
         if (apk) {
           const link = document.getElementById('download');
           link.href = apk.browser_download_url;
-          link.textContent = 'Download V2RayNG';
-          document.getElementById('status').textContent = `Latest version: ${data.tag_name}`;
+          link.textContent = 'دانلود V2RayNG';
+          document.getElementById('status').textContent = `نسخه: ${data.tag_name}`;
         } else {
-          document.getElementById('download').textContent = 'APK Not Found';
-          document.getElementById('status').textContent = 'No APK found in latest release.';
+          document.getElementById('download').textContent = 'فایل APK پیدا نشد';
         }
       })
-      .catch(error => {
-        document.getElementById('download').textContent = 'Error';
-        document.getElementById('status').textContent = 'Failed to fetch release info.';
+      .catch(() => {
+        document.getElementById('download').textContent = 'خطا در دریافت نسخه';
       });
   </script>
 </body>
